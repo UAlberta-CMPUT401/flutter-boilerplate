@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_travel_ui/widgets/destination_carousel.dart';
-import 'package:flutter_travel_ui/widgets/hotel_carousel.dart';
+import 'package:flutter_travel_ui/widgets/outfit_carousel.dart';
+import 'package:flutter_travel_ui/widgets/categoryicon_carousel.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,13 +11,35 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   int _currentTab = 0;
+  int currentIndex = 0;
+  final pages = [
+    // HomePage() put the class names here
+  ];
   List<IconData> _icons = [
     FontAwesomeIcons.car,
     FontAwesomeIcons.bed,
     FontAwesomeIcons.walking,
     FontAwesomeIcons.biking,
   ];
-
+  void onPressed(int index){
+    if(index == 0){
+      print("index 0");
+      // to go to another page
+      // Navigator.push(
+      //                   context,
+      //                   MaterialPageRoute(builder: (context) => HomePage()),
+      //                   );
+    }
+    else if (index == 1){
+      print("index 1");
+    }
+    else if (index == 2){
+      print("index 2");
+    }
+    else {
+      print("index 3");
+    }
+  }
   Widget _buildIcon(int index) {
     return GestureDetector(
       onTap: () {
@@ -63,7 +85,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SizedBox(height: 20.0),
-            Row(
+            CategoryIconCarousel(),
+            SizedBox(height: 20.0),
+            OutfitCarousel(),
+            SizedBox(height: 20.0),
+
+/*            Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: _icons
                   .asMap()
@@ -73,13 +100,42 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                   .toList(),
             ),
-            SizedBox(height: 20.0),
-            DestinationCarousel(),
-            SizedBox(height: 20.0),
-            HotelCarousel(),
+*/
           ],
         ),
       ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.blue,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white70,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        currentIndex: currentIndex,
+
+        onTap: (index) => onPressed(index),
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label:'Home',
+
+          ),
+          BottomNavigationBarItem(
+            icon:Icon(Icons.favorite),
+            label:'Favorite',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label:'',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(FontAwesomeIcons.car),
+            label:'',
+          ),
+        ],
+      ),
+
     );
   }
 }

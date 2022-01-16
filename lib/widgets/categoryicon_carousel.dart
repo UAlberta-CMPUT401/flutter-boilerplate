@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_travel_ui/models/hotel_model.dart';
+import 'package:flutter_travel_ui/models/category_icon_model.dart';
 
-class HotelCarousel extends StatelessWidget {
+class CategoryIconCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -12,7 +12,7 @@ class HotelCarousel extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                'Exclusive Hotels',
+                'Categories',
                 style: TextStyle(
                   fontSize: 22.0,
                   fontWeight: FontWeight.bold,
@@ -38,9 +38,9 @@ class HotelCarousel extends StatelessWidget {
           height: 300.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: hotels.length,
+            itemCount: categories.length,
             itemBuilder: (BuildContext context, int index) {
-              Hotel hotel = hotels[index];
+              CategoryIcon category = categories[index];
               return Container(
                 margin: EdgeInsets.all(10.0),
                 width: 240.0,
@@ -62,7 +62,7 @@ class HotelCarousel extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
                               Text(
-                                hotel.name,
+                                category.name,
                                 style: TextStyle(
                                   fontSize: 22.0,
                                   fontWeight: FontWeight.w600,
@@ -70,20 +70,7 @@ class HotelCarousel extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(height: 2.0),
-                              Text(
-                                hotel.address,
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              SizedBox(height: 2.0),
-                              Text(
-                                '\$${hotel.price} / night',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
+
                             ],
                           ),
                         ),
@@ -106,7 +93,7 @@ class HotelCarousel extends StatelessWidget {
                         child: Image(
                           height: 180.0,
                           width: 220.0,
-                          image: AssetImage(hotel.imageUrl),
+                          image: AssetImage(category.imageUrl),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -120,4 +107,35 @@ class HotelCarousel extends StatelessWidget {
       ],
     );
   }
+}/*
+import 'package:flutter/material.dart';
+import 'package:flutter_travel_ui/models/category_icon_model.dart';
+
+class CategoryIconCarousel extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    const title = 'Category';
+    return MaterialApp(
+      title: title,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(title),),
+        body: GridView.count(
+          crossAxisCount: 3,
+            children: List.generate(categories.length, (index) {
+              return Center(
+                child: Image(
+                  height: 180.0,
+                  width: 220.0,
+                  image: AssetImage(categories[index].imageUrl),
+                  fit: BoxFit.cover,
+                ),
+              );
+            }
+          )
+        ),
+      )
+    );
+  }
 }
+*/
