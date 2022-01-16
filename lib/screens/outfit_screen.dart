@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_chips_input/flutter_chips_input.dart';
+import 'package:flutter_travel_ui/models/clothing.dart';
+import 'package:flutter_travel_ui/models/outfit.dart';
 import 'package:flutter_travel_ui/widgets/destination_carousel.dart';
 import 'package:flutter_travel_ui/widgets/hotel_carousel.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,6 +21,46 @@ class _OutfitScreenState extends State<OutfitScreen> {
   ValueNotifier<int> bagIndexNotifier = ValueNotifier(0);
   ValueNotifier<int> bottomIndexNotifier = ValueNotifier(0);
   ValueNotifier<int> footwearIndexNotifier = ValueNotifier(0);
+
+  List<clothing> topperList = [];
+  List<clothing> topList = [];
+  List<clothing> bagList = [];
+  List<clothing> bottomList = [];
+  List<clothing> footwearList = [];
+
+  @override
+  void initState() {
+    preloadLists();
+    super.initState();
+  }
+
+  List<OutfitUIData> convertToOutfitUIData(List<clothing> cloths, String filter) {
+    List<OutfitUIData> dataList = [];
+
+    for(int i = 0; i < cloths.length; ++i) {
+      clothing cloth = cloths[i];
+
+      if (cloth.category != filter) {
+        continue;
+      }
+
+      dataList.add(OutfitUIData(cloth.category, '${cloth.category} $i'));
+    }
+
+    return dataList;
+  }
+
+  // todo(TurnipXenon): async
+  void preloadLists() {
+    // todo(TurnipXenon): preload lists here
+    topperList = List<clothing>.from(clothings);
+    topList = List<clothing>.from(clothings);
+    bagList = List<clothing>.from(clothings);
+    bottomList = List<clothing>.from(clothings);
+    footwearList = List<clothing>.from(clothings);
+
+    // todo(TurnipXenon): update the notifiters?
+  }
 
   Widget _gridItem(
       ValueNotifier<int> valueNotifier, List<OutfitUIData> outfitList) {
@@ -144,41 +186,40 @@ class _OutfitScreenState extends State<OutfitScreen> {
         case 0:
           gridChildren.add(_gridItem(
               topperIndexNotifier,
-              [
-                OutfitUIData("Topper", "Topper 1"),
-                OutfitUIData("Topper", "Topper 2"),
-              ]
+              convertToOutfitUIData(topperList, TOPPER)
           ));
           break;
         case 1:
           gridChildren.add(_gridItem(
               topIndexNotifier,
-              [
-                OutfitUIData("Top", "Top 1"),
-                OutfitUIData("Top", "Top 2"),
-              ]
+              convertToOutfitUIData(topperList, TOP)
           ));
           break;
         case 2:
           gridChildren.add(_gridItem(
               bagIndexNotifier,
-              [
-                OutfitUIData("Bag", "Bag 1"),
-                OutfitUIData("Bag", "Bag 2"),
-              ]
+              convertToOutfitUIData(topperList, BAG)
           ));
           break;
         case 4:
-          gridChildren.add(_gridItem(bottomIndexNotifier, [OutfitUIData("Topper", "Topper 1")]));
+          gridChildren.add(_gridItem(
+              bottomIndexNotifier,
+              convertToOutfitUIData(topperList, BOTTOM)
+          ));
           break;
         case 7:
-          gridChildren.add(_gridItem(footwearIndexNotifier, [OutfitUIData("Topper", "Topper 1")]));
+          gridChildren.add(_gridItem(
+              footwearIndexNotifier,
+              convertToOutfitUIData(topperList, FOOTWEAR)
+          ));
           break;
         default:
           gridChildren.add(Container());
           break;
       }
     }
+
+    outfit newOutfit;
 
     return MaterialApp(
         title: "Hello",
@@ -263,17 +304,30 @@ class _OutfitScreenState extends State<OutfitScreen> {
                 ),
               ),
               ElevatedButton(
-                  onPressed: () => {
-                    // todo(TurnipXenon): save here
-                    // get the clothing via index
-                    // compile all into list
-                    // put in new outfit object
-                    // save to hive
-                  },
+                  onPressed: () => _save(),
                   child: Text("Save"))
             ],
           ),
         ));
+  }
+
+  void _save() {
+    outfit newOutfit = outfit(
+        [
+          topperList[topperIndexNotifier.value],
+          topperList[topIndexNotifier.value],
+          topperList[bagIndexNotifier.value],
+          topperList[bottomIndexNotifier.value],
+          topperList[footwearIndexNotifier.value],
+        ],
+        "todo",
+        []
+    );
+    // todo(TurnipXenon): save here
+    // get the clothing via index
+    // compile all into list
+    // put in new outfit object
+    // save to hive
   }
 }
 

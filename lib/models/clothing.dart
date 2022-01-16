@@ -8,36 +8,72 @@ class clothing {
   clothing(this.imagePath, this.category, this.tags);
 }
 
+const TOPPER = "topper";
+const TOP = "top";
+const BAG = "bag";
+const BOTTOM = "bottom";
+const FOOTWEAR = "footwear";
+
 // todo(TurnipXenon): replace once actual database comes
 List<clothing> clothings = [
   clothing(
       Uint8List(0),
-      "Jeans",
+      TOPPER,
       ["winter", "weekend", "formal"]
   ),
   clothing(
       Uint8List(0),
-      "Shirt",
+      TOP,
       ["summer", "weekend", "informal"]
   ),
   clothing(
       Uint8List(0),
-      "Jeans",
+      BOTTOM,
       ["spring", "weekdays", "formal"]
   ),
   clothing(
       Uint8List(0),
-      "PAnts",
+      BAG,
       ["work", "formal"]
   ),
   clothing(
       Uint8List(0),
-      "Pants",
+      BOTTOM,
       ["fall", "informal"]
   ),
   clothing(
       Uint8List(0),
-      "Shoes",
+      FOOTWEAR,
+      ["weekdays", "formal"]
+  ),
+  clothing(
+      Uint8List(0),
+      TOPPER,
+      ["winter", "weekend", "formal"]
+  ),
+  clothing(
+      Uint8List(0),
+      TOP,
+      ["summer", "weekend", "informal"]
+  ),
+  clothing(
+      Uint8List(0),
+      BOTTOM,
+      ["spring", "weekdays", "formal"]
+  ),
+  clothing(
+      Uint8List(0),
+      BAG,
+      ["work", "formal"]
+  ),
+  clothing(
+      Uint8List(0),
+      BOTTOM,
+      ["fall", "informal"]
+  ),
+  clothing(
+      Uint8List(0),
+      FOOTWEAR,
       ["weekdays", "formal"]
   ),
 ];
