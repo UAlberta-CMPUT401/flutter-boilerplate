@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_travel_ui/models/clothing.dart';
 import 'package:flutter_travel_ui/models/destination_model.dart';
 import 'package:flutter_travel_ui/screens/destination_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // todo(TurnipXenon): optimize / flatten tree
+// todo(TurnipXenon): replace all destination instances
 class GenericGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,15 +20,16 @@ class GenericGrid extends StatelessWidget {
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20),
             scrollDirection: Axis.vertical,
-            itemCount: destinations.length,
+            itemCount: clothings.length,
             itemBuilder: (BuildContext context, int index) {
-              Destination destination = destinations[index];
+              clothing cloth = clothings[index];
               return GestureDetector(
                 onTap: () => Navigator.push(
                   context,
+                  // todo(TurnipXenon): replace to go to add clothes reuse that page
                   MaterialPageRoute(
                     builder: (_) => DestinationScreen(
-                      destination: destination,
+                      destination: Destination(),
                     ),
                   ),
                 ),
@@ -52,7 +55,7 @@ class GenericGrid extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  '${destination.activities.length} activities',
+                                  '${cloth.tags.length} tags',
                                   style: TextStyle(
                                     fontSize: 22.0,
                                     fontWeight: FontWeight.w600,
@@ -60,7 +63,7 @@ class GenericGrid extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  destination.description,
+                                  cloth.category,
                                   style: TextStyle(
                                     color: Colors.grey,
                                   ),
@@ -85,13 +88,14 @@ class GenericGrid extends StatelessWidget {
                         child: Stack(
                           children: <Widget>[
                             Hero(
-                              tag: destination.imageUrl,
+                              tag: "assets/images/venice.jpg",
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20.0),
                                 child: Image(
                                   height: 180.0,
                                   width: 180.0,
-                                  image: AssetImage(destination.imageUrl),
+                                  // todo(TurnipXenon): use the data from clothing
+                                  image: AssetImage("assets/images/venice.jpg"),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -103,7 +107,7 @@ class GenericGrid extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    destination.city,
+                                    cloth.category,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 24.0,
@@ -120,7 +124,7 @@ class GenericGrid extends StatelessWidget {
                                       ),
                                       SizedBox(width: 5.0),
                                       Text(
-                                        destination.country,
+                                        cloth.category,
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),
