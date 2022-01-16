@@ -18,6 +18,7 @@ environment:
 
 dependencies:
   flutter_chips_input: ^1.10.0
+  image_picker:
   flutter:
     sdk: flutter
 
@@ -25,6 +26,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   font_awesome_flutter: ^8.5.0
+  flutter_circle_color_picker: ^0.3.0
 
 dev_dependencies:
   flutter_test:
