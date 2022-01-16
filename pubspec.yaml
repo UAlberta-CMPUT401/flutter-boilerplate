@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   font_awesome_flutter: ^8.5.0
   flutter_circle_color_picker: ^0.3.0
+  fluttertoast: ^8.0.8
 
 dev_dependencies:
   flutter_test:

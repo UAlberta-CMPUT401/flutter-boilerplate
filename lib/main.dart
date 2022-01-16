@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_travel_ui/screens/add_clothes_screen.dart';
 import 'package:flutter_travel_ui/screens/home_screen.dart';
 
 void main() => runApp(MyApp());
