@@ -1,15 +1,23 @@
-
+import 'clothing_model.dart';
 class Outfit {
   String imageUrl;
 
   String name;
 
+  final List<Clothing> clothes;
+  final String category; //Ex. Jeans, Shirt, Pants, etc
+  final List<String> tags; //Ex. Winter, weekend, Formal, etc
 
   Outfit({
+
     this.imageUrl,
     this.name,
+    this.clothes,
+    this.category,
+    this.tags,
   });
 }
+
 
 
 List<Outfit> outfits = [
