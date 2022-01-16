@@ -7,7 +7,8 @@ import 'package:flutter_chips_input/flutter_chips_input.dart';
 
 class GenericItemSelectorScreen extends StatefulWidget {
   @override
-  _GenericItemSelectorScreenState createState() => _GenericItemSelectorScreenState();
+  _GenericItemSelectorScreenState createState() =>
+      _GenericItemSelectorScreenState();
 }
 
 class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
@@ -19,7 +20,6 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
     FontAwesomeIcons.walking,
     FontAwesomeIcons.biking,
   ];
-
 
   Widget _buildIcon(int index) {
     return GestureDetector(
@@ -50,7 +50,6 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     const mockResults = <AppProfile>[
       AppProfile('John Doe', 'jdoe@flutter.io',
           'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX4057996.jpg'),
@@ -81,65 +80,73 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
     return MaterialApp(
       title: "Hello",
       home: Scaffold(
-        appBar: AppBar(title: const Text("AppBarTitle")),
-        body: ListView(
-          padding: EdgeInsets.symmetric(vertical: 30.0),
-          children: <Widget>[
-            ChipsInput(
-              // todo(TurnipXenon): have initial value when users click from home page
-                initialValue: [],
-                decoration: InputDecoration(
-                  labelText: "Select tag",
-                ),
-                maxChips: 3,
-                findSuggestions: (String query) {
-                  if (query.length != 0) {
-                    var lowercaseQuery = query.toLowerCase();
-                    return mockResults.where((profile) {
-                      return profile.name.toLowerCase().contains(query.toLowerCase()) || profile.email.toLowerCase().contains(query.toLowerCase());
-                    }).toList(growable: false)
-                      ..sort((a, b) => a.name
-                          .toLowerCase()
-                          .indexOf(lowercaseQuery)
-                          .compareTo(b.name.toLowerCase().indexOf(lowercaseQuery)));
-                  } else {
-                    return const <AppProfile>[];
-                  }
-                },
-                onChanged: (data) {
-                  print(data);
-                },
-                chipBuilder: (context, state, profile) {
-                  return InputChip(
-                    key: ObjectKey(profile),
-                    label: Text(profile.name),
-                    avatar: CircleAvatar(
-                      backgroundImage: NetworkImage(profile.imageUrl),
-                    ),
-                    onDeleted: () => state.deleteChip(profile),
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  );
-                },
-                suggestionBuilder: (context, state, profile) {
-                  return ListTile(
-                    key: ObjectKey(profile),
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(profile.imageUrl),
-                    ),
-                    title: Text(profile.name),
-                    subtitle: Text(profile.email),
-                    onTap: () => state.selectSuggestion(profile),
-                  );
-                }
-            ),
-            GenericGrid(),
-          ],
-        )
-      ),
+          appBar: AppBar(title: const Text("AppBarTitle")),
+          body: ListView(
+            padding: EdgeInsets.symmetric(vertical: 10.0),
+            children: <Widget>[
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15.0),
+                  child: ChipsInput(
+                      // from https://stackoverflow.com/a/55944412/17836168
+                      // todo(TurnipXenon): have initial value when users click from home page
+                      initialValue: [],
+                      decoration: InputDecoration(
+                        labelText: "Select tag",
+                      ),
+                      maxChips: 3,
+                      findSuggestions: (String query) {
+                        if (query.length != 0) {
+                          var lowercaseQuery = query.toLowerCase();
+                          return mockResults.where((profile) {
+                            return profile.name
+                                    .toLowerCase()
+                                    .contains(query.toLowerCase()) ||
+                                profile.email
+                                    .toLowerCase()
+                                    .contains(query.toLowerCase());
+                          }).toList(growable: false)
+                            ..sort((a, b) => a.name
+                                .toLowerCase()
+                                .indexOf(lowercaseQuery)
+                                .compareTo(b.name
+                                    .toLowerCase()
+                                    .indexOf(lowercaseQuery)));
+                        } else {
+                          return const <AppProfile>[];
+                        }
+                      },
+                      onChanged: (data) {
+                        print(data);
+                      },
+                      chipBuilder: (context, state, profile) {
+                        return InputChip(
+                          key: ObjectKey(profile),
+                          label: Text(profile.name),
+                          avatar: CircleAvatar(
+                            backgroundImage: NetworkImage(profile.imageUrl),
+                          ),
+                          onDeleted: () => state.deleteChip(profile),
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                        );
+                      },
+                      suggestionBuilder: (context, state, profile) {
+                        return ListTile(
+                          key: ObjectKey(profile),
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(profile.imageUrl),
+                          ),
+                          title: Text(profile.name),
+                          subtitle: Text(profile.email),
+                          onTap: () => state.selectSuggestion(profile),
+                        );
+                      })),
+              GenericGrid(),
+            ],
+          )),
     );
   }
 }
-
 
 class AppProfile {
   final String name;
@@ -151,9 +158,9 @@ class AppProfile {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is AppProfile &&
-              runtimeType == other.runtimeType &&
-              name == other.name;
+      other is AppProfile &&
+          runtimeType == other.runtimeType &&
+          name == other.name;
 
   @override
   int get hashCode => name.hashCode;
