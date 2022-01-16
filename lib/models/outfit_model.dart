@@ -24,6 +24,7 @@ List<Outfit> outfits = [
   Outfit(
     imageUrl: 'assets/images/venice.jpg',
     name: 'Venice outfit.',
+    category: 'winter',
   ),
   Outfit(
     imageUrl: 'assets/images/paris.jpg',

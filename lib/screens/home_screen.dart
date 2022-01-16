@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_travel_ui/models/outfit_model.dart';
 import 'package:flutter_travel_ui/widgets/outfit_carousel.dart';
 import 'package:flutter_travel_ui/widgets/categoryicon_carousel.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     FontAwesomeIcons.walking,
     FontAwesomeIcons.biking,
   ];
+
   void onPressed(int index){
     if(index == 0){
       print("index 0");
@@ -77,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: EdgeInsets.only(left: 20.0, right: 120.0),
               child: Text(
-                'What would you like to find?',
+                'Digital Closet',
                 style: TextStyle(
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold,
