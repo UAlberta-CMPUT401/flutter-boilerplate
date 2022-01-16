@@ -1,4 +1,6 @@
 import 'dart:typed_data';
+import 'package:hive/hive.dart';
+
 
 class clothing {
   final Uint8List imagePath;

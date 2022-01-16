@@ -1,9 +1,7 @@
-# Apps From Scratch: Flutter Travel UI
+# Untitled App
+Made by i-dont-know-what-im-doing-just-here-to-have-fun (IDKWIDJHTHF) team
 
-[YouTube: Flutter Travel UI Tutorial | Apps From Scratch](https://youtu.be/CSa6Ocyog4U)
+The codebase was forked from (https://github.com/UAlberta-CMPUT401/flutter-boilerplate)[UAlberta-CMPUT401/flutter-boilerplate]
 
-
-# Resoures:
-Dribble : https://dribbble.com/  <br />
-Devpost account : https://devpost.com/brij1823 <br/>
-Flutter Widgets : https://www.youtube.com/watch?v=hLLz_yzLWcU&t=303s
+# Resources
+- Input chips UI: https://pub.dev/packages/flutter_chips_input

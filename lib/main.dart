@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_travel_ui/screens/generic_item_selector_screen.dart';
 import 'package:flutter_travel_ui/screens/home_screen.dart';
 import 'package:flutter_travel_ui/screens/outfit_screen.dart';
 
 void main() => runApp(MyApp());
 
+// todo(TurnipXenon): remove debug banner
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override

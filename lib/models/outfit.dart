@@ -1,4 +1,6 @@
 import 'package:flutter_travel_ui/models/clothing.dart';
+import 'package:hive/hive.dart';
+
 
 class outfit {
   final List<clothing> clothes;
