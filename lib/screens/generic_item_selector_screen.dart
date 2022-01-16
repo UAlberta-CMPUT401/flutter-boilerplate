@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_travel_ui/models/clothing.dart';
 import 'package:flutter_travel_ui/widgets/destination_carousel.dart';
 import 'package:flutter_travel_ui/widgets/generic_grid.dart';
 import 'package:flutter_travel_ui/widgets/hotel_carousel.dart';
@@ -14,15 +15,10 @@ class GenericItemSelectorScreen extends StatefulWidget {
 }
 
 class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
-  int _selectedIndex = 0;
-  int _currentTab = 0;
-  List<IconData> _icons = [
-    FontAwesomeIcons.car,
-    FontAwesomeIcons.bed,
-    FontAwesomeIcons.walking,
-    FontAwesomeIcons.biking,
-  ];
+  List<clothing> cloths = [];
+
   ScrollController _controller;
+  List<String> _tags = [];
 
   _scrollListener() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
@@ -43,34 +39,29 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
   void initState() {
     _controller = ScrollController();
     _controller.addListener(_scrollListener); //the listener for up and down.
+
+    // todo(TurnipXenon)
+    if (cloths != null) {
+      cloths = new List<clothing>.from(clothings);
+    }
+
     super.initState();
   }
 
-  Widget _buildIcon(int index) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedIndex = index;
-        });
-      },
-      child: Container(
-        height: 60.0,
-        width: 60.0,
-        decoration: BoxDecoration(
-          color: _selectedIndex == index
-              ? Theme.of(context).accentColor
-              : Color(0xFFE7EBEE),
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        child: Icon(
-          _icons[index],
-          size: 25.0,
-          color: _selectedIndex == index
-              ? Theme.of(context).primaryColor
-              : Color(0xFFB4C1C4),
-        ),
-      ),
-    );
+  // todo(TurnipXenon): run async
+  // todo(TurnipXenon): remove hardcode
+  void filterClothes(GenericGrid genericGrid) {
+    List<clothing> _cloths = [];
+
+    if (_tags.isEmpty) {
+      // todo(TurnipXenon): if no filter, get all
+      _cloths = new List<clothing>.from(clothings);
+    } else {
+      // todo(TurnipXenon): if has filter, get some
+      _cloths = [];
+    }
+
+    genericGrid.refresh(_cloths);
   }
 
   @override
@@ -102,6 +93,8 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
           'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'),
     ];
 
+    GenericGrid genericGrid = GenericGrid();
+
     return MaterialApp(
       title: "Hello",
       home: Scaffold(
@@ -116,8 +109,8 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
                   Expanded(
                     flex: 5,
                     child: ChipsInput(
-                      // from https://stackoverflow.com/a/55944412/17836168
-                      // todo(TurnipXenon): have initial value when users click from home page
+                        // from https://stackoverflow.com/a/55944412/17836168
+                        // todo(TurnipXenon): have initial value when users click from home page
                         initialValue: [],
                         decoration: InputDecoration(
                           labelText: "Select tag",
@@ -128,8 +121,8 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
                             var lowercaseQuery = query.toLowerCase();
                             return mockResults.where((profile) {
                               return profile.name
-                                  .toLowerCase()
-                                  .contains(query.toLowerCase()) ||
+                                      .toLowerCase()
+                                      .contains(query.toLowerCase()) ||
                                   profile.email
                                       .toLowerCase()
                                       .contains(query.toLowerCase());
@@ -138,14 +131,15 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
                                   .toLowerCase()
                                   .indexOf(lowercaseQuery)
                                   .compareTo(b.name
-                                  .toLowerCase()
-                                  .indexOf(lowercaseQuery)));
+                                      .toLowerCase()
+                                      .indexOf(lowercaseQuery)));
                           } else {
                             return const <AppProfile>[];
                           }
                         },
                         onChanged: (data) {
-                          print(data);
+                          // todo(TurnipXenon): cancel previously running query then hit a query again?
+                          filterClothes(genericGrid);
                         },
                         chipBuilder: (context, state, profile) {
                           return InputChip(
@@ -156,7 +150,7 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
                             ),
                             onDeleted: () => state.deleteChip(profile),
                             materialTapTargetSize:
-                            MaterialTapTargetSize.shrinkWrap,
+                                MaterialTapTargetSize.shrinkWrap,
                           );
                         },
                         suggestionBuilder: (context, state, profile) {
@@ -173,12 +167,12 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
                   ),
                   Expanded(
                       flex: 1,
-                      child: ElevatedButton(onPressed: () {}, child: Text("Filter")))
+                      child: ElevatedButton(
+                          onPressed: () {}, child: Text("Filter")))
                 ],
               ),
             ),
-
-            GenericGrid(),
+            genericGrid,
           ],
         ),
       ),

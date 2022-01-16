@@ -6,9 +6,27 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // todo(TurnipXenon): optimize / flatten tree
 // todo(TurnipXenon): replace all destination instances
-class GenericGrid extends StatelessWidget {
+class GenericGrid extends StatefulWidget {
+  @override
+  _GenericGridState createState() =>
+      _GenericGridState();
+
+  void refresh(List<clothing> cloths) {
+    _GenericGridState.
+  }
+}
+
+
+class _GenericGridState extends State<GenericGrid> {
+  List<clothing> _cloths;
+
   @override
   Widget build(BuildContext context) {
+    int count = 0;
+    if (_cloths != null) {
+      count = _cloths.length;
+    }
+
     return Column(
       children: <Widget>[
         Container(
@@ -20,9 +38,10 @@ class GenericGrid extends StatelessWidget {
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20),
             scrollDirection: Axis.vertical,
-            itemCount: clothings.length,
+            itemCount: count,
             itemBuilder: (BuildContext context, int index) {
-              clothing cloth = clothings[index];
+              // todo(TurnipXenon): assertion???
+              clothing cloth = _cloths[index];
               return GestureDetector(
                 onTap: () => Navigator.push(
                   context,
@@ -146,5 +165,9 @@ class GenericGrid extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void refresh(List<clothing> cloths) {
+    setState((){_cloths = cloths;});
   }
 }
