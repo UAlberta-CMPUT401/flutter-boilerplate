@@ -139,7 +139,6 @@ class _AddClothesScreenState extends State<AddClothesScreen> {
                 child: _decideImageView(),
               ),
             ),
-            SizedBox(height: 30.0),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Row(
