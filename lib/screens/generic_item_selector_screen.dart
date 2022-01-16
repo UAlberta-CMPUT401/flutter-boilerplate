@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_travel_ui/widgets/destination_carousel.dart';
 import 'package:flutter_travel_ui/widgets/generic_grid.dart';
@@ -20,6 +22,29 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
     FontAwesomeIcons.walking,
     FontAwesomeIcons.biking,
   ];
+  ScrollController _controller;
+
+  _scrollListener() {
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {
+        //you can do anything here
+      });
+    }
+    if (_controller.offset <= _controller.position.minScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {
+        //you can do anything here
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener); //the listener for up and down.
+    super.initState();
+  }
 
   Widget _buildIcon(int index) {
     return GestureDetector(
@@ -80,70 +105,83 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
     return MaterialApp(
       title: "Hello",
       home: Scaffold(
-          appBar: AppBar(title: const Text("AppBarTitle")),
-          body: ListView(
-            padding: EdgeInsets.symmetric(vertical: 10.0),
-            children: <Widget>[
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15.0),
-                  child: ChipsInput(
+        appBar: AppBar(title: const Text("AppBarTitle")),
+        body: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    flex: 5,
+                    child: ChipsInput(
                       // from https://stackoverflow.com/a/55944412/17836168
                       // todo(TurnipXenon): have initial value when users click from home page
-                      initialValue: [],
-                      decoration: InputDecoration(
-                        labelText: "Select tag",
-                      ),
-                      maxChips: 3,
-                      findSuggestions: (String query) {
-                        if (query.length != 0) {
-                          var lowercaseQuery = query.toLowerCase();
-                          return mockResults.where((profile) {
-                            return profile.name
-                                    .toLowerCase()
-                                    .contains(query.toLowerCase()) ||
-                                profile.email
-                                    .toLowerCase()
-                                    .contains(query.toLowerCase());
-                          }).toList(growable: false)
-                            ..sort((a, b) => a.name
-                                .toLowerCase()
-                                .indexOf(lowercaseQuery)
-                                .compareTo(b.name
-                                    .toLowerCase()
-                                    .indexOf(lowercaseQuery)));
-                        } else {
-                          return const <AppProfile>[];
-                        }
-                      },
-                      onChanged: (data) {
-                        print(data);
-                      },
-                      chipBuilder: (context, state, profile) {
-                        return InputChip(
-                          key: ObjectKey(profile),
-                          label: Text(profile.name),
-                          avatar: CircleAvatar(
-                            backgroundImage: NetworkImage(profile.imageUrl),
-                          ),
-                          onDeleted: () => state.deleteChip(profile),
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                        );
-                      },
-                      suggestionBuilder: (context, state, profile) {
-                        return ListTile(
-                          key: ObjectKey(profile),
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(profile.imageUrl),
-                          ),
-                          title: Text(profile.name),
-                          subtitle: Text(profile.email),
-                          onTap: () => state.selectSuggestion(profile),
-                        );
-                      })),
-              GenericGrid(),
-            ],
-          )),
+                        initialValue: [],
+                        decoration: InputDecoration(
+                          labelText: "Select tag",
+                        ),
+                        // maxChips: 3,
+                        findSuggestions: (String query) {
+                          if (query.length != 0) {
+                            var lowercaseQuery = query.toLowerCase();
+                            return mockResults.where((profile) {
+                              return profile.name
+                                  .toLowerCase()
+                                  .contains(query.toLowerCase()) ||
+                                  profile.email
+                                      .toLowerCase()
+                                      .contains(query.toLowerCase());
+                            }).toList(growable: false)
+                              ..sort((a, b) => a.name
+                                  .toLowerCase()
+                                  .indexOf(lowercaseQuery)
+                                  .compareTo(b.name
+                                  .toLowerCase()
+                                  .indexOf(lowercaseQuery)));
+                          } else {
+                            return const <AppProfile>[];
+                          }
+                        },
+                        onChanged: (data) {
+                          print(data);
+                        },
+                        chipBuilder: (context, state, profile) {
+                          return InputChip(
+                            key: ObjectKey(profile),
+                            label: Text(profile.name),
+                            avatar: CircleAvatar(
+                              backgroundImage: NetworkImage(profile.imageUrl),
+                            ),
+                            onDeleted: () => state.deleteChip(profile),
+                            materialTapTargetSize:
+                            MaterialTapTargetSize.shrinkWrap,
+                          );
+                        },
+                        suggestionBuilder: (context, state, profile) {
+                          return ListTile(
+                            key: ObjectKey(profile),
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(profile.imageUrl),
+                            ),
+                            title: Text(profile.name),
+                            subtitle: Text(profile.email),
+                            onTap: () => state.selectSuggestion(profile),
+                          );
+                        }),
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: ElevatedButton(onPressed: () {}, child: Text("Filter")))
+                ],
+              ),
+            ),
+
+            GenericGrid(),
+          ],
+        ),
+      ),
     );
   }
 }
