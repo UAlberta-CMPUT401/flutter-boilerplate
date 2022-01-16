@@ -116,7 +116,13 @@ class _AddClothesScreenState extends State<AddClothesScreen> {
           );
         });
   }
-
+  Widget _decideImageView() {
+    if (imageFile == null) {
+      return Text('Add Image');
+    } else {
+      return Image.file(imageFile, height: 400);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,7 +150,7 @@ class _AddClothesScreenState extends State<AddClothesScreen> {
                 onPressed: () {
                   _showChoiceDialog(context);
                 },
-                child: Text('Add Image'),
+                child: _decideImageView(),
               ),
             ),
             Padding(
