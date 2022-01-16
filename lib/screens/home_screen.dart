@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_travel_ui/screens/add_clothes_screen.dart';
 import 'package:flutter_travel_ui/widgets/destination_carousel.dart';
 import 'package:flutter_travel_ui/widgets/hotel_carousel.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,6 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _selectedIndex = index;
         });
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return AddClothesScreen();
+        }));
       },
       child: Container(
         height: 60.0,
