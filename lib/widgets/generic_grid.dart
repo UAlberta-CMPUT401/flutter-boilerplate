@@ -3,39 +3,12 @@ import 'package:flutter_travel_ui/models/destination_model.dart';
 import 'package:flutter_travel_ui/screens/destination_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+// todo(TurnipXenon): optimize / flatten tree
 class GenericGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                'Top Destinations',
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.5,
-                ),
-              ),
-              GestureDetector(
-                onTap: () => print('See All'),
-                child: Text(
-                  'See All',
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.0,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
         Container(
           height: 300.0,
           child: GridView.builder(
