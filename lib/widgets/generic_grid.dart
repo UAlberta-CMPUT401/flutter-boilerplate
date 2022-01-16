@@ -6,25 +6,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // todo(TurnipXenon): optimize / flatten tree
 // todo(TurnipXenon): replace all destination instances
-class GenericGrid extends StatefulWidget {
-  @override
-  _GenericGridState createState() =>
-      _GenericGridState();
+class GenericGrid extends StatelessWidget {
+  final List<clothing> cloths;
 
-  void refresh(List<clothing> cloths) {
-    _GenericGridState.
-  }
-}
-
-
-class _GenericGridState extends State<GenericGrid> {
-  List<clothing> _cloths;
+  GenericGrid(this.cloths);
 
   @override
   Widget build(BuildContext context) {
     int count = 0;
-    if (_cloths != null) {
-      count = _cloths.length;
+    if (cloths != null) {
+      count = cloths.length;
     }
 
     return Column(
@@ -41,7 +32,7 @@ class _GenericGridState extends State<GenericGrid> {
             itemCount: count,
             itemBuilder: (BuildContext context, int index) {
               // todo(TurnipXenon): assertion???
-              clothing cloth = _cloths[index];
+              clothing cloth = cloths[index];
               return GestureDetector(
                 onTap: () => Navigator.push(
                   context,
@@ -165,9 +156,5 @@ class _GenericGridState extends State<GenericGrid> {
         ),
       ],
     );
-  }
-
-  void refresh(List<clothing> cloths) {
-    setState((){_cloths = cloths;});
   }
 }

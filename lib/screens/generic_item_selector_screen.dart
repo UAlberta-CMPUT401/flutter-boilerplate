@@ -15,10 +15,10 @@ class GenericItemSelectorScreen extends StatefulWidget {
 }
 
 class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
-  List<clothing> cloths = [];
+  ValueNotifier<List<clothing>> clothsNotifier = ValueNotifier([]);
 
   ScrollController _controller;
-  List<String> _tags = [];
+  List<dynamic> _tags = [];
 
   _scrollListener() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
@@ -41,16 +41,15 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
     _controller.addListener(_scrollListener); //the listener for up and down.
 
     // todo(TurnipXenon)
-    if (cloths != null) {
-      cloths = new List<clothing>.from(clothings);
-    }
+    clothsNotifier.value = new List<clothing>.from(clothings);
 
     super.initState();
   }
 
   // todo(TurnipXenon): run async
   // todo(TurnipXenon): remove hardcode
-  void filterClothes(GenericGrid genericGrid) {
+  void filterClothes(List<dynamic> data) {
+    _tags = data;
     List<clothing> _cloths = [];
 
     if (_tags.isEmpty) {
@@ -60,8 +59,7 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
       // todo(TurnipXenon): if has filter, get some
       _cloths = [];
     }
-
-    genericGrid.refresh(_cloths);
+    clothsNotifier.value = _cloths;
   }
 
   @override
@@ -92,8 +90,6 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
       AppProfile('Gina', 'fred@flutter.io',
           'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'),
     ];
-
-    GenericGrid genericGrid = GenericGrid();
 
     return MaterialApp(
       title: "Hello",
@@ -139,8 +135,8 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
                         },
                         onChanged: (data) {
                           // todo(TurnipXenon): cancel previously running query then hit a query again?
-                          filterClothes(genericGrid);
-                        },
+                          filterClothes(data);
+                          },
                         chipBuilder: (context, state, profile) {
                           return InputChip(
                             key: ObjectKey(profile),
@@ -172,11 +168,23 @@ class _GenericItemSelectorScreenState extends State<GenericItemSelectorScreen> {
                 ],
               ),
             ),
-            genericGrid,
+            ValueListenableBuilder(
+                valueListenable: clothsNotifier,
+                builder: (BuildContext context, List<clothing> value, Widget child) {
+                  // print(value.length);
+                  return GenericGrid(value);
+                }
+            ),
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    clothsNotifier.dispose();
+    super.dispose();
   }
 }
 
